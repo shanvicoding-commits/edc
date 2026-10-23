@@ -297,4 +297,121 @@
       if (Math.random() < 0.25) confetti(30);   // 1-in-4 clicks also throws confetti
     });
   }
+
+  /* ---------- 12. Fun quiz: "Which Founder Are You?" ----------
+     Every answer gives one point to a founder type (V, B, C or S).
+     At the end, the type with the most points wins. */
+  const quizBody = document.querySelector('#quiz-body');
+  if (quizBody) {
+    // The four possible results
+    const types = {
+      V: { emoji: '🚀', title: 'The Visionary',
+           text: 'You see what doesn\u2019t exist yet and get everyone excited about it. Big ideas are your fuel \u2014 just remember to turn them into small first steps.',
+           session: 'From Idea to Startup', time: '10:20 AM' },
+      B: { emoji: '🛠️', title: 'The Builder',
+           text: 'Talk is cheap, you ship. Give you a weekend and a laptop and something real appears. Startups need people who actually make things.',
+           session: 'Campus Idea Sprint', time: '12:00 PM' },
+      C: { emoji: '🤝', title: 'The Connector',
+           text: 'You know who to call, and people love working with you. Great ventures grow through great relationships \u2014 yours are your superpower.',
+           session: 'Networking and Closing', time: '2:15 PM' },
+      S: { emoji: '📊', title: 'The Strategist',
+           text: 'You think a few moves ahead. Plans, numbers, timing \u2014 you turn chaos into a roadmap and keep the team on track.',
+           session: 'Pitching Basics', time: '1:15 PM' }
+    };
+
+    // The questions: each option adds a point to one type
+    const questions = [
+      { text: 'Your friends need a plan for Saturday. You\u2026',
+        options: [
+          { emoji: '💡', label: 'Pitch a wild new idea nobody has tried', type: 'V' },
+          { emoji: '📝', label: 'Sort out timings, budget and logistics', type: 'S' },
+          { emoji: '📱', label: 'Text everyone and get the whole gang together', type: 'C' },
+          { emoji: '💻', label: 'Quickly build a shared sheet or app for it', type: 'B' } ] },
+      { text: 'Pick your startup superpower:',
+        options: [
+          { emoji: '🔮', label: 'Seeing the future of an industry', type: 'V' },
+          { emoji: '⚡', label: 'Building anything in a weekend', type: 'B' },
+          { emoji: '🌐', label: 'Knowing the right person for everything', type: 'C' },
+          { emoji: '🎯', label: 'Making perfect decisions under pressure', type: 'S' } ] },
+      { text: 'In a group project, you are the one who\u2026',
+        options: [
+          { emoji: '🌈', label: 'Comes up with the big, creative idea', type: 'V' },
+          { emoji: '🔧', label: 'Actually makes the thing work', type: 'B' },
+          { emoji: '🎤', label: 'Presents it and keeps the team happy', type: 'C' },
+          { emoji: '📅', label: 'Plans the timeline and tracks progress', type: 'S' } ] },
+      { text: 'You win \u20B91 lakh in funding. First move?',
+        options: [
+          { emoji: '🌍', label: 'Dream even bigger \u2014 start something bolder', type: 'V' },
+          { emoji: '🧪', label: 'Build a working prototype right away', type: 'B' },
+          { emoji: '🎉', label: 'Throw a launch event and meet mentors', type: 'C' },
+          { emoji: '🔍', label: 'Research the market before spending a rupee', type: 'S' } ] }
+    ];
+
+    let current = 0;    // which question we are on
+    let answers = [];   // the type picked for each question so far
+    let locked = false; // stops double-clicks while the next question loads
+
+    function showQuestion() {
+      const q = questions[current];
+      locked = false;
+      quizBody.innerHTML = `
+        <div class="quiz-anim">
+          <div class="quiz-progress" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="${questions.length}" aria-valuenow="${current}">
+            <span style="--p:${(current / questions.length) * 100}%"></span>
+          </div>
+          <p class="quiz-count">Question ${current + 1} of ${questions.length}</p>
+          <h3 class="quiz-question" tabindex="-1">${q.text}</h3>
+          <div class="quiz-options">
+            ${q.options.map(o => `<button type="button" class="quiz-option" data-type="${o.type}"><span class="opt-emoji" aria-hidden="true">${o.emoji}</span><span>${o.label}</span></button>`).join('')}
+          </div>
+        </div>`;
+      quizBody.querySelector('.quiz-question').focus({ preventScroll: true });
+    }
+
+    function showResult() {
+      // Count the points for each type
+      const score = { V: 0, B: 0, C: 0, S: 0 };
+      answers.forEach(t => score[t]++);
+      const best = Math.max(...Object.values(score));
+      const tied = Object.keys(score).filter(t => score[t] === best);
+      // If there is a tie, the answer to the LAST question breaks it
+      const winner = tied.includes(answers[answers.length - 1]) ? answers[answers.length - 1] : tied[0];
+      const r = types[winner];
+
+      quizBody.innerHTML = `
+        <div class="quiz-result quiz-anim" role="status">
+          <div class="quiz-progress"><span style="--p:100%"></span></div>
+          <div class="result-emoji" aria-hidden="true">${r.emoji}</div>
+          <p class="eyebrow">YOU ARE</p>
+          <h3 class="result-title" tabindex="-1">${r.title}</h3>
+          <p class="result-text">${r.text}</p>
+          <p class="quiz-tip">🎟️ Don\u2019t miss: <strong>${r.session}</strong> \u00B7 ${r.time}</p>
+          <div class="quiz-actions">
+            <a class="button button-dark" href="#register">Register Now <span aria-hidden="true">\u2192</span></a>
+            <button class="button button-light" id="quiz-retry" type="button">Retake <span aria-hidden="true">\u21BB</span></button>
+          </div>
+        </div>`;
+      quizBody.querySelector('.result-title').focus({ preventScroll: true });
+      confetti(60);
+    }
+
+    function startQuiz() { current = 0; answers = []; showQuestion(); }
+
+    // One listener handles every button inside the quiz card (start, answers, retake)
+    quizBody.addEventListener('click', e => {
+      const option = e.target.closest('.quiz-option');
+      if (option && !locked) {
+        locked = true;
+        option.classList.add('picked');
+        quizBody.querySelectorAll('.quiz-option').forEach(b => { b.disabled = true; });
+        answers.push(option.dataset.type);
+        setTimeout(() => {                       // short pause so the picked answer is visible
+          current++;
+          if (current < questions.length) showQuestion(); else showResult();
+        }, 450);
+        return;
+      }
+      if (e.target.closest('#quiz-start') || e.target.closest('#quiz-retry')) startQuiz();
+    });
+  }
 })();
