@@ -37,6 +37,7 @@
       <nav id="main-nav" class="main-nav" aria-label="Main navigation">
         <a class="nav-link active" href="#home">Home</a>
         <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#quiz">Quiz</a>
         <a class="nav-link" href="#schedule">Schedule</a>
         <a class="nav-link" href="#speakers">Speakers</a>
         <a class="nav-link" href="#register">Register</a>
@@ -115,6 +116,25 @@
         <div class="stat reveal" style="--d:.3s"><span class="stat-emoji" aria-hidden="true">🌟</span><strong><span data-count="2">0</span></strong><small>Founders on Stage</small></div>
       </section>
 
+      <!-- ================= FUN QUIZ: "Which Founder Are You?" =================
+           The questions and results live in script.js (section 12). This is just the card + start screen. -->
+      <section class="quiz section-wrap" id="quiz" aria-labelledby="quiz-title">
+        <div class="quiz-card reveal">
+          <div class="quiz-head">
+            <p class="eyebrow">QUICK QUIZ</p>
+            <h2 id="quiz-title">Which Founder Are You?</h2>
+            <p class="quiz-sub">4 questions. 30 seconds. No wrong answers.</p>
+          </div>
+          <div class="quiz-body" id="quiz-body">
+            <div class="quiz-start">
+              <div class="quiz-start-emoji" aria-hidden="true">🎯</div>
+              <p>Find out your founder personality and which session at VentureVerse is made for you.</p>
+              <button class="button button-dark" id="quiz-start" type="button">Start the Quiz <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ================= SCHEDULE + SPEAKERS + REGISTER ================= -->
       <section class="lower-grid section-wrap">
         <div class="schedule-section" id="schedule"><p class="eyebrow">EVENT SCHEDULE</p><h2>A Day Full of Ideas and Inspiration</h2><ol class="timeline">
@@ -145,7 +165,7 @@
     </main>
 
     <!-- ================= FOOTER ================= -->
-    <footer class="site-footer section-wrap"><a class="brand footer-brand" href="#home" aria-label="EDC, JSS University Noida — back to top"><img class="edc-logo" src="edc-light.png" data-light-logo="edc-light.png" data-dark-logo="edc-dark.png" alt="Entrepreneurship Development Cell, JSSUN Noida" /><span class="brand-divider" aria-hidden="true"></span><img class="jss-logo" src="jss-university.png" alt="JSS University, Noida emblem" /></a><nav class="footer-nav" aria-label="Footer navigation"><a href="#home">Home</a><span>|</span><a href="#about">About</a><span>|</span><a href="#schedule">Schedule</a><span>|</span><a href="#speakers">Speakers</a><span>|</span><a href="#register">Register</a></nav>
+    <footer class="site-footer section-wrap"><a class="brand footer-brand" href="#home" aria-label="EDC, JSS University Noida — back to top"><img class="edc-logo" src="edc-light.png" data-light-logo="edc-light.png" data-dark-logo="edc-dark.png" alt="Entrepreneurship Development Cell, JSSUN Noida" /><span class="brand-divider" aria-hidden="true"></span><img class="jss-logo" src="jss-university.png" alt="JSS University, Noida emblem" /></a><nav class="footer-nav" aria-label="Footer navigation"><a href="#home">Home</a><span>|</span><a href="#about">About</a><span>|</span><a href="#quiz">Quiz</a><span>|</span><a href="#schedule">Schedule</a><span>|</span><a href="#speakers">Speakers</a><span>|</span><a href="#register">Register</a></nav>
       <!-- Social links: replace these with the real EDC profile URLs when you have them -->
       <div class="social-links" aria-label="Social links"><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">ig</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a><a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">▶</a><a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X">𝕏</a></div><p class="footer-motto">Ideas. People. Ventures.<br /><small>© 2026 EDC, JSS University, Noida</small></p></footer>
   </div>
