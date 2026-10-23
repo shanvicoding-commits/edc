@@ -349,3 +349,32 @@ html.js .reveal.show{ opacity:1; translate:0 0; }
   html.js .reveal{ opacity:1; translate:0 0; }
   .marquee-track{ animation:none; }
 }
+
+/* Safety net: if the script failed, never leave sections invisible */
+html.no-script-fallback .reveal{ opacity:1; translate:0 0; }
+
+/* =====================================================================
+   TIMELINE FIX — the connecting line is now drawn by each list item,
+   in the same grid column as its dot, so it can never drift onto the text.
+   (Replaces the old absolute-positioned line.)
+   ===================================================================== */
+.timeline:before,.timeline:after{ display:none; }          /* turn off the old line */
+
+/* put time, dot and text in fixed grid cells so the line can share the dot's column */
+.timeline li > time{ grid-column:1; grid-row:1; }
+.timeline li > .timeline-dot{ grid-column:2; grid-row:1; position:relative; z-index:2; }
+.timeline li > div{ grid-column:3; grid-row:1; }
+
+/* the line segment: sits in the dot's column and runs down to the next dot */
+.timeline li::before{
+  content:""; grid-column:2; grid-row:1; justify-self:center; align-self:start;
+  width:2px; height:100%; margin-top:12px; z-index:1; border-radius:2px;
+  background:linear-gradient(var(--pink),var(--blue));
+  transform-origin:top; transition:transform .6s ease .25s;
+}
+.timeline li:last-child::before{ display:none; }            /* no line after the last item */
+
+/* draw each segment when its item is revealed (only when JS is running) */
+html.js .timeline li::before{ transform:scaleY(0); }
+html.js .timeline li.show::before,
+html.no-script-fallback .timeline li::before{ transform:scaleY(1); }
