@@ -6,10 +6,21 @@
   <meta name="theme-color" content="#f8f6f1" id="theme-color-meta" />
   <meta name="description" content="VentureVerse 2026 — Ideas into Action. A student-focused entrepreneurship event by EDC, JSS University, Noida." />
   <title>VentureVerse 2026 — Ideas into Action</title>
+  <!-- Adds the class "js" to <html> as early as possible.
+       The CSS uses it so scroll-reveal elements are only hidden when JavaScript is running. -->
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- ===== Decorative effects (hidden from screen readers) ===== -->
+  <div class="scroll-progress" aria-hidden="true"></div>   <!-- rainbow bar that fills as you scroll -->
+  <div class="blob blob-1" aria-hidden="true"></div>       <!-- soft floating colour blobs -->
+  <div class="blob blob-2" aria-hidden="true"></div>
+  <div class="blob blob-3" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>       <!-- glow that follows the mouse -->
+ 
   <div class="page-shell">
+    <!-- ================= HEADER / NAVIGATION ================= -->
     <header class="site-header" id="home">
       <a class="brand" href="#home" aria-label="EDC, JSS University Noida — VentureVerse home">
         <img class="edc-logo" src="assets/edc-light.png" data-light-logo="assets/edc-light.png" data-dark-logo="assets/edc-dark.png" alt="Entrepreneurship Development Cell, JSSUN Noida" />
@@ -27,23 +38,33 @@
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark</span></button>
       <a class="button button-dark header-cta" href="#register">Register Now <span aria-hidden="true">↗</span></a>
     </header>
-
+ 
     <main>
+      <!-- ================= HERO ================= -->
       <section class="hero section-wrap" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow">EDC PRESENTS</p>
           <h1 id="hero-title">VentureVerse <span>2026</span></h1>
-          <p class="hero-tagline">Ideas into Action</p>
+ 
+          <!-- Tagline: screen readers read the fixed sentence; sighted users see the typing animation.
+               "Action" is the fallback text if JavaScript is off. -->
+          <p class="hero-tagline">
+            <span class="sr-only">Ideas into Action</span>
+            <span aria-hidden="true">Ideas into <span id="typed">Action</span><span class="cursor">|</span></span>
+          </p>
+ 
           <p class="hero-description">A student-focused event about turning early ideas into ventures, learning from startup journeys, and exploring entrepreneurship on campus.</p>
           <div class="event-meta">
-            <div class="meta-item"><span class="meta-icon" aria-hidden="true">▦</span><span><strong>12 November 2026</strong><small>10:00 AM – 3:00 PM</small></span></div>
-            <div class="meta-item"><span class="meta-icon pin" aria-hidden="true">●</span><span><strong>University Auditorium</strong><small>JSS University, Noida</small></span></div>
+            <div class="meta-item"><span class="meta-icon" aria-hidden="true">📅</span><span><strong>12 November 2026</strong><small>10:00 AM – 3:00 PM</small></span></div>
+            <div class="meta-item"><span class="meta-icon" aria-hidden="true">📍</span><span><strong>University Auditorium</strong><small>JSS University, Noida</small></span></div>
           </div>
           <div class="hero-actions"><a class="button button-dark" href="#register">Register Now <span aria-hidden="true">→</span></a><a class="button button-light" href="#about">Explore <span aria-hidden="true">↓</span></a></div>
         </div>
+ 
+        <!-- Illustration built only with HTML + CSS. Click it for a surprise! -->
         <div class="hero-art" aria-label="Illustration of students collaborating on a startup idea" role="img">
           <div class="art-plant plant-left"><i></i><i></i><i></i><b></b></div>
-          <div class="idea-board"><span class="sticky sticky-one"></span><span class="sticky sticky-two"></span><span class="board-bulb">♧</span><span class="board-words">IDEAS<br />PEOPLE<br />VENTURES<br />COMMUNITY</span><svg class="board-chart" viewBox="0 0 100 70" aria-hidden="true"><path d="M8 60V10M8 60H92M18 49l19-18 16 8 29-28"/><path d="M70 11h12v12"/></svg></div>
+          <div class="idea-board"><span class="sticky sticky-one"></span><span class="sticky sticky-two"></span><span class="board-bulb">💡</span><span class="board-words">IDEAS<br />PEOPLE<br />VENTURES<br />COMMUNITY</span><svg class="board-chart" viewBox="0 0 100 70" aria-hidden="true"><path d="M8 60V10M8 60H92M18 49l19-18 16 8 29-28"/><path d="M70 11h12v12"/></svg></div>
           <div class="desk"></div>
           <div class="book-stack"><span>IDEAS</span><span>BUILD</span><span>GROW</span></div>
           <div class="student student-one"><div class="hair"></div><div class="face"><i class="eye eye-left"></i><i class="eye eye-right"></i><i class="smile"></i></div><div class="neck"></div><div class="body"><span class="hoodie-line"></span></div><div class="arm arm-raised"></div></div>
@@ -51,45 +72,78 @@
           <div class="student student-three"><div class="hair"></div><div class="face"><i class="eye eye-left"></i><i class="eye eye-right"></i><i class="smile"></i><span class="glasses"></span></div><div class="neck"></div><div class="body"></div><div class="arm"></div></div>
           <div class="laptop"><div class="laptop-screen"><span>✳</span></div><div class="laptop-base"></div></div>
           <div class="plant plant-right"><i></i><i></i><i></i><b></b></div>
+ 
+          <!-- Floating emoji chips (decorative) -->
+          <span class="float-chip chip-1" aria-hidden="true">🚀</span>
+          <span class="float-chip chip-2" aria-hidden="true">💰</span>
+          <span class="float-chip chip-3" aria-hidden="true">🤝</span>
+          <span class="float-chip chip-4" aria-hidden="true">✨</span>
+ 
           <div class="countdown" aria-label="Countdown to event"><div><strong id="days">--</strong><small>Days</small></div><div><strong id="hours">--</strong><small>Hours</small></div><div><strong id="minutes">--</strong><small>Minutes</small></div><div><strong id="seconds">--</strong><small>Seconds</small></div></div>
         </div>
       </section>
-
+ 
+      <!-- ================= MARQUEE STRIP (decorative scrolling text) =================
+           The text is repeated twice so the loop looks endless (CSS moves it left by 50%). -->
+      <div class="marquee section-wrap" aria-hidden="true">
+        <div class="marquee-track">
+          <span>IDEAS ✦ PEOPLE ✦ VENTURES ✦ COMMUNITY ✦ STARTUPS ✦ NETWORKING ✦ IDEAS ✦ PEOPLE ✦ VENTURES ✦ COMMUNITY ✦ STARTUPS ✦ NETWORKING ✦ </span>
+          <span>IDEAS ✦ PEOPLE ✦ VENTURES ✦ COMMUNITY ✦ STARTUPS ✦ NETWORKING ✦ IDEAS ✦ PEOPLE ✦ VENTURES ✦ COMMUNITY ✦ STARTUPS ✦ NETWORKING ✦ </span>
+        </div>
+      </div>
+ 
+      <!-- ================= ABOUT ================= -->
+      <!-- class="reveal" = fades/slides in when scrolled into view; --d = delay so cards appear one by one -->
       <section class="about-panel section-wrap" id="about">
-        <div class="about-intro"><p class="eyebrow">ABOUT THE EVENT</p><h2>From Ideas to Impact</h2><p>VentureVerse 2026 brings together curious minds, startup enthusiasts, and experienced founders to learn, share, and build. Whether you have an idea or just the curiosity, this event gives you the exposure and connections to take your first step.</p></div>
-        <article class="feature-card"><span class="feature-icon blue" aria-hidden="true">♧</span><h3>Real Startup Insights</h3><p>Learn directly from founders about real challenges and success stories.</p></article>
-        <article class="feature-card"><span class="feature-icon green" aria-hidden="true">♧</span><h3>Build Your Network</h3><p>Connect with like-minded students, mentors, and the startup ecosystem.</p></article>
-        <article class="feature-card"><span class="feature-icon peach" aria-hidden="true">↗</span><h3>Turn Ideas into Action</h3><p>Get practical knowledge, resources, and guidance to start your own journey.</p></article>
+        <div class="about-intro reveal"><p class="eyebrow">ABOUT THE EVENT</p><h2>From Ideas to Impact</h2><p>VentureVerse 2026 brings together curious minds, startup enthusiasts, and experienced founders to learn, share, and build. Whether you have an idea or just the curiosity, this event gives you the exposure and connections to take your first step.</p></div>
+        <article class="feature-card reveal" style="--d:.1s"><span class="feature-icon blue" aria-hidden="true">💡</span><h3>Real Startup Insights</h3><p>Learn directly from founders about real challenges and success stories.</p></article>
+        <article class="feature-card reveal" style="--d:.2s"><span class="feature-icon green" aria-hidden="true">🤝</span><h3>Build Your Network</h3><p>Connect with like-minded students, mentors, and the startup ecosystem.</p></article>
+        <article class="feature-card reveal" style="--d:.3s"><span class="feature-icon peach" aria-hidden="true">🚀</span><h3>Turn Ideas into Action</h3><p>Get practical knowledge, resources, and guidance to start your own journey.</p></article>
       </section>
-
+ 
+      <!-- ================= STATS (numbers count up from 0 when visible) ================= -->
+      <section class="stats section-wrap" aria-label="Event at a glance">
+        <div class="stat reveal"><span class="stat-emoji" aria-hidden="true">🎓</span><strong><span data-count="500">0</span>+</strong><small>Students Expected</small></div>
+        <div class="stat reveal" style="--d:.1s"><span class="stat-emoji" aria-hidden="true">💡</span><strong><span data-count="25">0</span>+</strong><small>Ideas Pitched</small></div>
+        <div class="stat reveal" style="--d:.2s"><span class="stat-emoji" aria-hidden="true">🎤</span><strong><span data-count="6">0</span></strong><small>Power Sessions</small></div>
+        <div class="stat reveal" style="--d:.3s"><span class="stat-emoji" aria-hidden="true">🌟</span><strong><span data-count="2">0</span></strong><small>Founders on Stage</small></div>
+      </section>
+ 
+      <!-- ================= SCHEDULE + SPEAKERS + REGISTER ================= -->
       <section class="lower-grid section-wrap">
         <div class="schedule-section" id="schedule"><p class="eyebrow">EVENT SCHEDULE</p><h2>A Day Full of Ideas and Inspiration</h2><ol class="timeline">
-          <li><time>10:00 AM</time><span class="timeline-dot dot-blue"></span><div><h3>Welcome</h3><p>Opening remarks and event overview</p></div></li>
-          <li><time>10:20 AM</time><span class="timeline-dot dot-green"></span><div><h3>From Idea to Startup</h3><p>Journey of turning an idea into a real venture</p></div></li>
-          <li><time>11:15 AM</time><span class="timeline-dot dot-peach"></span><div><h3>Founder Story</h3><p>Insights from an experienced founder</p></div></li>
-          <li><time>12:00 PM</time><span class="timeline-dot dot-blue"></span><div><h3>Campus Idea Sprint</h3><p>Student pitches and idea showcase</p></div></li>
-          <li><time>1:15 PM</time><span class="timeline-dot dot-peach"></span><div><h3>Pitching Basics</h3><p>How to present your idea effectively</p></div></li>
-          <li><time>2:15 PM</time><span class="timeline-dot dot-green"></span><div><h3>Networking and Closing</h3><p>Connect, collaborate, and wrap up</p></div></li>
+          <li class="reveal"><time>10:00 AM</time><span class="timeline-dot dot-blue"></span><div><h3>Welcome</h3><p>Opening remarks and event overview</p></div></li>
+          <li class="reveal" style="--d:.05s"><time>10:20 AM</time><span class="timeline-dot dot-green"></span><div><h3>From Idea to Startup</h3><p>Journey of turning an idea into a real venture</p></div></li>
+          <li class="reveal" style="--d:.1s"><time>11:15 AM</time><span class="timeline-dot dot-peach"></span><div><h3>Founder Story</h3><p>Insights from an experienced founder</p></div></li>
+          <li class="reveal" style="--d:.15s"><time>12:00 PM</time><span class="timeline-dot dot-blue"></span><div><h3>Campus Idea Sprint</h3><p>Student pitches and idea showcase</p></div></li>
+          <li class="reveal" style="--d:.2s"><time>1:15 PM</time><span class="timeline-dot dot-peach"></span><div><h3>Pitching Basics</h3><p>How to present your idea effectively</p></div></li>
+          <li class="reveal" style="--d:.25s"><time>2:15 PM</time><span class="timeline-dot dot-green"></span><div><h3>Networking and Closing</h3><p>Connect, collaborate, and wrap up</p></div></li>
         </ol></div>
-
+ 
         <div class="speakers-section" id="speakers"><p class="eyebrow">SPEAKERS &amp; GUESTS</p><h2>Meet Our Speakers</h2><div class="speaker-cards">
-          <article class="speaker-card"><div class="avatar avatar-aarav" role="img" aria-label="Illustrated portrait of fictional speaker Aarav Mehta"><div class="avatar-hair"></div><div class="avatar-face"><i></i><i></i><b></b></div><div class="avatar-neck"></div><div class="avatar-shirt"></div><span class="avatar-leaf leaf-a"></span><span class="avatar-leaf leaf-b"></span></div><h3>Aarav Mehta</h3><p class="speaker-role">Founder &amp; CEO<br />NovaTech (Fictional)</p><p class="speaker-bio">Ex-student, now building AI products for a global market. Passionate about student entrepreneurship.</p><div class="tags"><span>Startup Journey</span><span>AI &amp; Innovation</span></div></article>
-          <article class="speaker-card"><div class="avatar avatar-riya" role="img" aria-label="Illustrated portrait of fictional speaker Riya Sharma"><div class="avatar-hair"></div><div class="avatar-face"><i></i><i></i><b></b></div><div class="avatar-neck"></div><div class="avatar-shirt"></div><span class="avatar-leaf leaf-a"></span><span class="avatar-leaf leaf-b"></span></div><h3>Riya Sharma</h3><p class="speaker-role">Co-founder<br />GreenLoop (Fictional)</p><p class="speaker-bio">Building sustainable solutions through technology. Believes in the power of young founders.</p><div class="tags tags-green"><span>Sustainability</span><span>Product &amp; Growth</span></div></article>
+          <article class="speaker-card reveal"><div class="avatar avatar-aarav" role="img" aria-label="Illustrated portrait of fictional speaker Aarav Mehta"><div class="avatar-hair"></div><div class="avatar-face"><i></i><i></i><b></b></div><div class="avatar-neck"></div><div class="avatar-shirt"></div><span class="avatar-leaf leaf-a"></span><span class="avatar-leaf leaf-b"></span></div><h3>Aarav Mehta</h3><p class="speaker-role">Founder &amp; CEO<br />NovaTech (Fictional)</p><p class="speaker-bio">Ex-student, now building AI products for a global market. Passionate about student entrepreneurship.</p><div class="tags"><span>Startup Journey</span><span>AI &amp; Innovation</span></div></article>
+          <article class="speaker-card reveal" style="--d:.15s"><div class="avatar avatar-riya" role="img" aria-label="Illustrated portrait of fictional speaker Riya Sharma"><div class="avatar-hair"></div><div class="avatar-face"><i></i><i></i><b></b></div><div class="avatar-neck"></div><div class="avatar-shirt"></div><span class="avatar-leaf leaf-a"></span><span class="avatar-leaf leaf-b"></span></div><h3>Riya Sharma</h3><p class="speaker-role">Co-founder<br />GreenLoop (Fictional)</p><p class="speaker-bio">Building sustainable solutions through technology. Believes in the power of young founders.</p><div class="tags tags-green"><span>Sustainability</span><span>Product &amp; Growth</span></div></article>
         </div></div>
-
-        <aside class="register-card" id="register"><p class="eyebrow">REGISTER NOW</p><h2>Be Part of VentureVerse</h2><p class="register-intro">Fill out the form below to register for the event. Seats are limited!</p><form id="registration-form" novalidate>
-          <label class="sr-only" for="full-name">Full name</label><input id="full-name" name="name" autocomplete="name" placeholder="♙   Full Name" required minlength="2" />
-          <label class="sr-only" for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="✉   Email Address" required />
-          <label class="sr-only" for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="♧   Phone Number" required pattern="[0-9+() -]{8,}" />
-          <label class="sr-only" for="college">College / Department</label><input id="college" name="college" placeholder="⌂   College / Department" required />
+ 
+        <!-- Registration form: each input sits inside a .field wrapper so an emoji icon can sit inside it.
+             Placeholders are real text now (the old version had symbols inside the placeholder). -->
+        <aside class="register-card reveal" id="register"><p class="eyebrow">REGISTER NOW</p><h2>Be Part of VentureVerse</h2><p class="register-intro">Fill out the form below to register for the event. Seats are limited!</p><form id="registration-form" novalidate>
+          <div class="field"><span class="field-icon" aria-hidden="true">👤</span><label class="sr-only" for="full-name">Full name</label><input id="full-name" name="name" autocomplete="name" placeholder="Full Name" required minlength="2" /></div>
+          <div class="field"><span class="field-icon" aria-hidden="true">✉️</span><label class="sr-only" for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="Email Address" required /></div>
+          <div class="field"><span class="field-icon" aria-hidden="true">📞</span><label class="sr-only" for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="Phone Number" required pattern="[0-9+() \-]{8,}" /></div>
+          <div class="field"><span class="field-icon" aria-hidden="true">🏫</span><label class="sr-only" for="college">College / Department</label><input id="college" name="college" placeholder="College / Department" required /></div>
           <button class="button button-dark form-submit" type="submit">Register Now <span aria-hidden="true">→</span></button>
           <p class="form-note">Demo form only. Your details are not stored or transmitted.</p><p class="form-message" id="form-message" role="status" aria-live="polite"></p>
         </form></aside>
       </section>
     </main>
-
-    <footer class="site-footer section-wrap"><a class="brand footer-brand" href="#home" aria-label="EDC, JSS University Noida — back to top"><img class="edc-logo" src="assets/edc-light.png" data-light-logo="assets/edc-light.png" data-dark-logo="assets/edc-dark.png" alt="Entrepreneurship Development Cell, JSSUN Noida" /><span class="brand-divider" aria-hidden="true"></span><img class="jss-logo" src="assets/jss-university.png" alt="JSS University, Noida emblem" /></a><nav class="footer-nav" aria-label="Footer navigation"><a href="#home">Home</a><span>|</span><a href="#about">About</a><span>|</span><a href="#schedule">Schedule</a><span>|</span><a href="#speakers">Speakers</a><span>|</span><a href="#register">Register</a></nav><div class="social-links" aria-label="Social links"><a href="#register" aria-label="Instagram">ig</a><a href="#register" aria-label="LinkedIn">in</a><a href="#register" aria-label="YouTube">▶</a><a href="#register" aria-label="X">𝕏</a></div><p class="footer-motto">Ideas. People. Ventures.<br /><small>© 2026 EDC, JSS University, Noida</small></p></footer>
+ 
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer section-wrap"><a class="brand footer-brand" href="#home" aria-label="EDC, JSS University Noida — back to top"><img class="edc-logo" src="assets/edc-light.png" data-light-logo="assets/edc-light.png" data-dark-logo="assets/edc-dark.png" alt="Entrepreneurship Development Cell, JSSUN Noida" /><span class="brand-divider" aria-hidden="true"></span><img class="jss-logo" src="assets/jss-university.png" alt="JSS University, Noida emblem" /></a><nav class="footer-nav" aria-label="Footer navigation"><a href="#home">Home</a><span>|</span><a href="#about">About</a><span>|</span><a href="#schedule">Schedule</a><span>|</span><a href="#speakers">Speakers</a><span>|</span><a href="#register">Register</a></nav>
+      <!-- Social links: replace these with the real EDC profile URLs when you have them -->
+      <div class="social-links" aria-label="Social links"><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">ig</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a><a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">▶</a><a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X">𝕏</a></div><p class="footer-motto">Ideas. People. Ventures.<br /><small>© 2026 EDC, JSS University, Noida</small></p></footer>
   </div>
   <script src="script.js"></script>
 </body>
 </html>
+ 
