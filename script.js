@@ -1,6 +1,21 @@
 (() => {
+  /* =====================================================================
+     VentureVerse 2026 — script.js
+     Sections:
+       1. Countdown timer (with bounce on change)
+       2. Theme toggle (light / dark, remembered)
+       3. Mobile menu
+       4. Registration form + confetti
+       5. Active nav link while scrolling
+       6. Scroll-reveal animations
+       7. Animated number counters
+       8. 3D tilt on cards
+       9. Typing tagline in the hero
+      10. Timeline line + scroll progress bar
+      11. Mouse glow + click-to-pop emojis
+     ===================================================================== */
 
- 
+  // Respect people who prefer less motion (set in their OS settings).
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- 1. Countdown timer ---------- */
@@ -54,6 +69,10 @@
       if (nextLogo && logo.getAttribute('src') !== nextLogo) logo.setAttribute('src', nextLogo);
     });
   }
+  // If the dark logo file is missing, quietly fall back to the light one instead of showing a broken image.
+  document.querySelectorAll('.edc-logo').forEach(logo => logo.addEventListener('error', () => {
+    if (logo.dataset.lightLogo && logo.getAttribute('src') !== logo.dataset.lightLogo) logo.setAttribute('src', logo.dataset.lightLogo);
+  }));
   applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
   if (themeToggle) themeToggle.addEventListener('click', () => {
     const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -131,48 +150,60 @@
     sections.forEach(section => observer.observe(section));
   }
 
-  /* ---------- 6. Scroll-reveal: elements with class "reveal" fade/slide in ---------- */
-  const revealItems = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('show');
-        revealObserver.unobserve(entry.target);   // animate only once
-      });
-    }, { threshold: 0.15 });
-    revealItems.forEach(el => revealObserver.observe(el));
-  } else {
-    revealItems.forEach(el => el.classList.add('show'));  // very old browsers: just show everything
-  }
+  /* ---------- 6 + 7. Scroll-reveal and animated counters ---------- */
+  // Tell the page the script is running (index.html checks this flag as a safety net).
+  window.__vvReady = true;
 
-  /* ---------- 7. Animated counters: numbers count up when scrolled into view ---------- */
-  const counters = document.querySelectorAll('[data-count]');
+  const revealItems = [...document.querySelectorAll('.reveal')];
+  const counters = [...document.querySelectorAll('[data-count]')];
+
+  // Counter: counts from 0 up to data-count with an "ease-out" feel.
   function runCounter(el) {
+    if (el.dataset.done) return;          // only once
+    el.dataset.done = '1';
     const end = Number(el.dataset.count);
     if (reduceMotion) { el.textContent = end; return; }
     const duration = 1400;
     const start = performance.now();
     function frame(now) {
       const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);        // starts fast, slows down at the end
-      el.textContent = Math.round(end * eased);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - t, 3)));
       if (t < 1) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
   }
+
+  // Simple check used on scroll/resize/load: anything that is on screen gets revealed.
+  // (This works together with the IntersectionObserver below, so content can never stay hidden.)
+  function revealVisible() {
+    const limit = window.innerHeight * 0.92;
+    revealItems.forEach(el => {
+      if (!el.classList.contains('show') && el.getBoundingClientRect().top < limit) el.classList.add('show');
+    });
+    counters.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9 && r.bottom > 0) runCounter(el);
+    });
+  }
+
   if ('IntersectionObserver' in window) {
-    const counterObserver = new IntersectionObserver(entries => {
+    const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
-        runCounter(entry.target);
-        counterObserver.unobserve(entry.target);
+        if (entry.target.matches('[data-count]')) runCounter(entry.target);
+        else entry.target.classList.add('show');
+        io.unobserve(entry.target);
       });
-    }, { threshold: 0.6 });
-    counters.forEach(el => counterObserver.observe(el));
-  } else {
-    counters.forEach(el => { el.textContent = el.dataset.count; });
+    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+    revealItems.forEach(el => io.observe(el));
+    counters.forEach(el => io.observe(el));
   }
+  window.addEventListener('scroll', revealVisible, { passive: true });
+  window.addEventListener('resize', revealVisible);
+  window.addEventListener('load', revealVisible);
+  setTimeout(revealVisible, 300);
+  setTimeout(revealVisible, 1200);
+  revealVisible();
 
   /* ---------- 8. 3D tilt: cards lean towards the mouse (mouse devices only) ---------- */
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
@@ -239,7 +270,7 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 
-
+  /* ---------- 11. Mouse glow + click-to-pop emojis ---------- */
   const glow = document.querySelector('.cursor-glow');
   if (glow && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
     window.addEventListener('mousemove', e => {
